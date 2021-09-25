@@ -8,7 +8,7 @@ import java.util.TreeSet;
 /**
  * 比较器
  */
-public class Practice05 {
+public class Practice05_Comparator {
 
 	public static class Student {
 		public String name;

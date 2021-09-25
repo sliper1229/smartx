@@ -11,9 +11,7 @@ public class Practice04 {
 
     // 获取某一位的数字
     public static int getDigit(int x, int d) {
-        return (
-                (x / ((int) Math.pow(10, d - 1))) % 10
-        );
+        return (x / ((int) Math.pow(10, d - 1))) % 10;
     }
 
     // 先取整，再取余
