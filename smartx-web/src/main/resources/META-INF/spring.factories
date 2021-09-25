@@ -1,0 +1,2 @@
+#customed ApplicationListener
+org.springframework.context.ApplicationListener=\com.cc.smartx.spring.listener.ApplicationStartedEventListener

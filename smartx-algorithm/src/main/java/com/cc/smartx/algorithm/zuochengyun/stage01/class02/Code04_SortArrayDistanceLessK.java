@@ -1,0 +1,46 @@
+package com.cc.smartx.algorithm.zuochengyun.stage01.class02;
+
+import java.util.PriorityQueue;
+
+/**
+ * 小根堆 N*logk
+ */
+public class Code04_SortArrayDistanceLessK {
+
+	public void sortedArrDistanceLessK(int[] arr, int k) {
+		// 默认小根堆
+        // 单次扩容时间复杂度 O(logN)
+        //
+		PriorityQueue<Integer> heap = new PriorityQueue<>();
+		int index = 0;
+		for (; index <= Math.min(arr.length, k); index++) {
+			heap.add(arr[index]);
+		}
+		int i = 0;
+		for (; index < arr.length; i++, index++) {
+			heap.add(arr[index]);
+			arr[i] = heap.poll();
+		}
+		while (!heap.isEmpty()) {
+			arr[i++] = heap.poll();
+		}
+	}
+
+	public static void main(String[] args) {
+
+		PriorityQueue<Integer> heap = new PriorityQueue<>();
+
+		heap.add(8);
+		heap.add(4);
+		heap.add(4);
+		heap.add(9);
+		heap.add(10);
+		heap.add(3);
+
+		while (!heap.isEmpty()) {
+			System.out.println(heap.poll());
+		}
+
+	}
+
+}

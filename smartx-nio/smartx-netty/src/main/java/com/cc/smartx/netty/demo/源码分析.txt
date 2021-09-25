@@ -1,0 +1,210 @@
+	
+	// 方法的名字，初始化ServerSocketChannel，注册到Selector多路复用轮询组件上去
+	final ChannelFuture initAndRegister() {
+        Channel channel = null;
+        try {
+			// 有一个默认的ChannelFactory
+			// 估计就是来创建ServerSocketChannel的，ServerSocketChannel创建好了
+			// 而且配置好了blocking是false
+			// 准备好了ServerSocketChannel将要关注的网络事件，OP_ACCEPT
+            channel = channelFactory.newChannel();
+			
+			// 接下来必然是让这个ServerSocketChannel去监听某个端口号，设置一些网络参数
+			// 然后再让这个ServerSocketChannel注册到Selector上去，关注他的OP_ACCEPT网络事件，不停的轮询他
+            init(channel);
+			
+			// 最最核心的，还是关注他核心的架构设计、底层技术的处理
+        } catch (Throwable t) {
+            if (channel != null) {
+                // channel can be null if newChannel crashed (eg SocketException("too many open files"))
+                channel.unsafe().closeForcibly();
+                // as the Channel is not registered yet we need to force the usage of the GlobalEventExecutor
+                return new DefaultChannelPromise(channel, GlobalEventExecutor.INSTANCE).setFailure(t);
+            }
+            // as the Channel is not registered yet we need to force the usage of the GlobalEventExecutor
+            return new DefaultChannelPromise(new FailedChannel(), GlobalEventExecutor.INSTANCE).setFailure(t);
+        }
+
+		// 拿出来了之前创建的一个EventLoopGroup，猜测，独立的线程，复杂用Selector轮询各种channel的网络事件
+		// 他把ServerSocketChannel注册到了一个EventLoopGroup上去
+		// 这里的意思，是不是就是说让EventLoopGroup中的独立线程采用一个Selector来注册channel，以及轮询事件
+        ChannelFuture regFuture = config().group().register(channel);
+        if (regFuture.cause() != null) {
+            if (channel.isRegistered()) {
+                channel.close();
+            } else {
+                channel.unsafe().closeForcibly();
+            }
+        }
+
+        // If we are here and the promise is not failed, it's one of the following cases:
+        // 1) If we attempted registration from the event loop, the registration has been completed at this point.
+        //    i.e. It's safe to attempt bind() or connect() now because the channel has been registered.
+        // 2) If we attempted registration from the other thread, the registration request has been successfully
+        //    added to the event loop's task queue for later execution.
+        //    i.e. It's safe to attempt bind() or connect() now:
+        //         because bind() or connect() will be executed *after* the scheduled registration task is executed
+        //         because register(), bind(), and connect() are all bound to the same thread.
+
+        return regFuture;
+    }
+	
+	@Override
+    public T newChannel() {
+        try {
+			// constructor，反射方式，NioServerSocketChannel.class
+			// 这个类是我们自己设置的，它是Netty提供的一个类
+			// 他一定是Netty自己把ServerSocketChannel给封装了一下，NioServerSocketChannel
+			// NettyServerSocketChannel
+            return constructor.newInstance();
+        } catch (Throwable t) {
+            throw new ChannelException("Unable to create Channel from class " + constructor.getDeclaringClass(), t);
+        }
+    }
+	
+	private static ServerSocketChannel newSocket(SelectorProvider provider) {
+        try {
+            /**
+             *  Use the {@link SelectorProvider} to open {@link SocketChannel} and so remove condition in
+             *  {@link SelectorProvider#provider()} which is called by each ServerSocketChannel.open() otherwise.
+             *
+             *  See <a href="https://github.com/netty/netty/issues/2308">#2308</a>.
+             */
+			// 直接就是通过原生的NIO的API，创建了一个ServerSocketChannel
+            return provider.openServerSocketChannel();
+        } catch (IOException e) {
+            throw new ChannelException(
+                    "Failed to open a server socket.", e);
+        }
+    }
+	
+	@Override
+    void init(Channel channel) throws Exception {
+		// 对ServerSocketChannel进行网络参数的设置
+        final Map<ChannelOption<?>, Object> options = options0();
+        synchronized (options) {
+            setChannelOptions(channel, options, logger);
+        }
+
+		// 初始化了一些属性
+        final Map<AttributeKey<?>, Object> attrs = attrs0();
+        synchronized (attrs) {
+            for (Entry<AttributeKey<?>, Object> e: attrs.entrySet()) {
+                @SuppressWarnings("unchecked")
+                AttributeKey<Object> key = (AttributeKey<Object>) e.getKey();
+                channel.attr(key).set(e.getValue());
+            }
+        }
+
+        ChannelPipeline p = channel.pipeline();
+
+        final EventLoopGroup currentChildGroup = childGroup;
+        final ChannelHandler currentChildHandler = childHandler;
+        final Entry<ChannelOption<?>, Object>[] currentChildOptions;
+        final Entry<AttributeKey<?>, Object>[] currentChildAttrs;
+        synchronized (childOptions) {
+            currentChildOptions = childOptions.entrySet().toArray(newOptionArray(0));
+        }
+        synchronized (childAttrs) {
+            currentChildAttrs = childAttrs.entrySet().toArray(newAttrArray(0));
+        }
+
+		// 就是对网络请求处理链路中加入一个自己内置的一个处理逻辑
+		// 初始化了网络请求的处理链路
+        p.addLast(new ChannelInitializer<Channel>() {
+            @Override
+            public void initChannel(final Channel ch) throws Exception {
+                final ChannelPipeline pipeline = ch.pipeline();
+                ChannelHandler handler = config.handler();
+                if (handler != null) {
+                    pipeline.addLast(handler);
+                }
+
+                ch.eventLoop().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        pipeline.addLast(new ServerBootstrapAcceptor(
+                                ch, currentChildGroup, currentChildHandler, currentChildOptions, currentChildAttrs));
+                    }
+                });
+            }
+        });
+    }
+	
+	@Override
+    public ChannelFuture register(Channel channel) {
+		// 所谓的EventLoopGroup就是可以不停的获取出来很多的线程
+		// 对应着一个线程池的，线程的数量是固定的，cpu核数 * 2
+		// 调用next()方法轮询获取出来这个线程池里的下一个线程，推测就是这个意思
+		// 123456,6个线程，第一次Next()是线程1，第二次next()是线程2，第三次next()是线程3
+		
+		// 他的next()方法，就是每次调用返回一个线程给你，让你通过这个线程去使用线程自己的Selector
+		// 注册对应的channel，不管是ServerSocketChannel，还是普通的SocketChannel
+		// 让这个线程去负责对应的这些channel的网络事件的轮询
+		
+		// 不知道大家是否还记得，就是之前我们写Reactor模型的时候，也是类似的思路，我们搞了一组Processor线程
+		// 每次有新的网络连接进入，都是轮询各个Processor线程，保证每个线程都可以获取到一定的连接
+        return next().register(channel);
+    }
+	
+	@Override
+	public EventExecutor next() {
+		return executors[Math.abs(idx.getAndIncrement() % executors.length)];
+	}
+	
+	@Override
+    protected void doRegister() throws Exception {
+        boolean selected = false;
+        for (;;) {
+            try {
+				// javaChannel() -> ServerSocketChannel
+				// register(Selector, 0, this)
+                selectionKey = javaChannel().register(eventLoop().unwrappedSelector(), 0, this);
+                return;
+            } catch (CancelledKeyException e) {
+                if (!selected) {
+                    // Force the Selector to select now as the "canceled" SelectionKey may still be
+                    // cached and not removed because no Select.select(..) operation was called yet.
+                    eventLoop().selectNow();
+                    selected = true;
+                } else {
+                    // We forced a select operation on the selector before but the SelectionKey is still cached
+                    // for whatever reason. JDK bug ?
+                    throw e;
+                }
+            }
+        }
+    }
+
+    @Override
+    protected int doReadMessages(List<Object> buf) throws Exception {
+		// 跟客户端建立连接，获取到对应的SocketChannel
+        SocketChannel ch = SocketUtils.accept(javaChannel());
+
+        try {
+            if (ch != null) {
+				// 把建立好的连接缓存在List里面了
+				// 大家知道为什么大名鼎鼎的Kafka，网络通信，为啥不用Netty呢？
+				// 如果你用Netty，开源框架，你必须精通他的源码，而且在适当的时候可以改造他的源码解决问题
+				// 对于Kafka这种中间件系统，对于底层的网络必须自己把控
+				// 如果网络框架一旦出了问题，必须自己可以从源码级别来解决，Kafka依赖Netty
+				// 一旦Netty有问题，源码层面Kafka作者没法来把控，就彻底Kafka也废掉了
+				// 处于这样的原因，Kafka是直接基于NIO自己研发网络通信组件的
+
+				// 分布式海量小文件存储系统，非常适合用NIO自己开发网络通信组件，哪怕是有一些问题，源码自己把控
+
+                buf.add(new NioSocketChannel(this, ch));
+                return 1;
+            }
+        } catch (Throwable t) {
+            logger.warn("Failed to create a new channel from an accepted socket.", t);
+
+            try {
+                ch.close();
+            } catch (Throwable t2) {
+                logger.warn("Failed to close a socket.", t2);
+            }
+        }
+
+        return 0;
+    }
