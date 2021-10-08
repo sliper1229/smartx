@@ -25,7 +25,6 @@ public class Code06_QuickSort {
         }
     }
 
-
     // arr[L, R], L R 都包含
     // 6, 3, 5, 7, 2, 4, 1
     // 小于区推着等于区往右走
@@ -34,17 +33,19 @@ public class Code06_QuickSort {
         int more = R; //大于区的左边界
         int index = L;
 
+        // 当前位置不能和大于区域撞上
         while (index < more) {
             if (arr[index] < arr[R]) {
                 swap(arr, ++less, index++); // 这里必须交换，划分出等于区
             } else if (arr[index] > arr[R]) {
-                swap(arr, --more, index); // 不能L++, 还需要和前面的比
+                swap(arr, --more, index); // 不能index++, 还需要和前面的比
             } else {
                 index++;
             }
 
         }
 
+        // 跟大于区的第一个数交换
         swap(arr, more++, R);
 
         return new int[]{less, more};
