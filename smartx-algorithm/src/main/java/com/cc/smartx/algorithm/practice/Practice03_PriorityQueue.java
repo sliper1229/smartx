@@ -7,7 +7,7 @@ import java.util.*;
  * @Author chenlipeng
  * @Date 2021-01-15
  */
-public class Practice03 {
+public class Practice03_PriorityQueue {
 
     public static void main(String[] args) {
 
