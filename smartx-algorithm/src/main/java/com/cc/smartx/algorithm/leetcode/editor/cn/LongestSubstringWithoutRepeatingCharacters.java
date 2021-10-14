@@ -75,7 +75,6 @@ public class LongestSubstringWithoutRepeatingCharacters {
                 max = Math.max(max, i - left + 1);
             }
             return max;
-
         }
 
         // T:O(N) S:O(N)

@@ -1,6 +1,6 @@
 package com.cc.smartx.algorithm.zuochengyun.大厂刷题班.class04;
 
-public class Code04_SubArrayMaxSumFollowUp {
+public class Code04_SubArrayMaxSumcom.cc.smartx.algorithm.zuochengyun.leetcodetop100.followup {
 
 	public static int subSqeMaxSumNoNext(int[] arr) {
 		if (arr == null || arr.length == 0) {
