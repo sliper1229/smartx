@@ -59,6 +59,7 @@
 // 👍 4572 👎 0
 
 package com.cc.smartx.algorithm.leetcode.editor.cn;
+
 /**
  * 寻找两个正序数组的中位数
  */
@@ -67,23 +68,99 @@ public class MedianOfTwoSortedArrays {
         Solution solution = new MedianOfTwoSortedArrays().new Solution();
         // TO TEST
     }
-    
-    //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
 
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+            int total = nums1.length + nums2.length;
+            // 奇数
+            if ((total & 1) == 1) {
+                return findKthSmallestInSortedArrays(nums1, nums2, total / 2 + 1);
+            } else {
+                double a = findKthSmallestInSortedArrays(nums1, nums2, total / 2);
+                double b = findKthSmallestInSortedArrays(nums1, nums2, total / 2 + 1);
+                return (a + b) / 2;
+            }
+        }
+
+
+        // 1 2 6 7 9
+        // 3 4 5 7 9
+        // k = 4
+        // 谁小排除掉谁
+        // 1、在原两个数组中找第4小，排除掉1个之后
+        // 2、剩下的元素中，找第2小，排除1个之后
+        // 3、在剩下的元素中，找第1小
+        // 整个过程下来。找到在整体上的第k小的数
+        public double findKthSmallestInSortedArrays(int[] nums1, int[] nums2, int k) {
+            // 数组剩余长度
+            int len1 = nums1.length, len2 = nums2.length;
+            // 两个指针，不停往右移 base1 + i = 下一个base1的位置
+            int base1 = 0, base2 = 0;
+
+            while (true) {
+                // 终止条件，任意一个数组剩余长度为01，即没有元素了
+                if (len1 == 0) return nums2[base2 + k - 1];
+                if (len2 == 0) return nums1[base1 + k - 1];
+                // 终止条件，k=1时，谁小取谁
+                if (k == 1) return Math.min(nums1[base1], nums2[base2]);
+
+                // base1和base2分别移动的长度
+                int i = Math.min(k / 2, len1);
+                int j = Math.min(k - i, len2);
+                int a = nums1[base1 + i - 1];
+                int b = nums2[base2 + j - 1];
+
+                // 终止条件，如果取的元素和刚好等于k，且正好相等，直接返回其中一个
+                if (i + j == k && a == b) return a;
+
+                if (a <= b) {
+                    base1 += i;
+                    len1 -= i;
+                    k -= i;
+                }
+                if (a >= b) {
+                    base2 += j;
+                    len2 -= j;
+                    k -= j;
+                }
+            }
+        }
     }
 
-    // 1 2 6 7 9
-    // 3 4 5 7 9
-    // k = 4
+    public double findKthSmallestInSortedArrays2(int[] nums1, int[] nums2, int k) {
+        int len1 = nums1.length, len2 = nums2.length;
+        // 标记当前从什么位置开始取数
+        int base1 = 0, base2 = 0;
+        while (true) {
+            // 终止条件
+            if (len1 - base1 == 0) return nums2[base2 + k - 1];
+            if (len2 - base2 == 0) return nums1[base1 + k - 1];
+            // 终止条件
+            if (k == 1) return Math.min(nums1[base1], nums2[base2]);
 
-    // 谁小排除掉谁
-    // 1、在原两个数组中找第4小，排除掉1个之后
-    // 2、剩下的元素中，找第2小，排除1个之后
-    // 3、在剩下的元素中，找第1小
-    // 整个过程下来。找到在整体上的第k小的数
-}
+            // 本次分别取多少个数，边界处理
+            int i = Math.max(k / 2, len1 - base1);
+            int j = Math.min(k / 2, len2 - base2);
+            int a = nums1[base1 + i], b = nums2[base2 + j];
+
+            // 终止条件
+            if (i + j == k && a == b) return a;
+
+            if (a <= b) {
+                base1 = i;
+                k -= i;
+            }
+
+            if (a >= b) {
+                base2 = j;
+                k -= j;
+            }
+
+        }
+    }
+
+
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
