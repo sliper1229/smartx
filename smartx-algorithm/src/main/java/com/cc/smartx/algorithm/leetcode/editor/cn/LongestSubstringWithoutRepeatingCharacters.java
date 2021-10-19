@@ -47,6 +47,7 @@
 
 package com.cc.smartx.algorithm.leetcode.editor.cn;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -79,23 +80,29 @@ public class LongestSubstringWithoutRepeatingCharacters {
 
         // T:O(N) S:O(N)
         public int lengthOfLongestSubstring2(String s) {
-            if (s == null || s.length() == 0) return 0;
-            int n = s.length();
-            HashMap<Character, Integer> map = new HashMap<>(); // key=char value=index
-            int left = 0;
-            int maxLen = 0;
-
-            for (int i = 0; i < n; i++) { // 0 ~ n
-                if (map.containsKey(s.charAt(i))) {
-                    left = map.get(s.charAt(i)) + 1;
-                }
-                map.put(s.charAt(i), i);
-                maxLen = Math.max(maxLen, i - left + 1);
+            if(s == null || s.equals("") || s.length() == 0) return 0;
+            // index[]索引数组  下标是字符、下标处的值表示在字符串中的位置
+            int[] map = new int[256];
+//            Arrays.fill(map, -1);
+            for (int i = 0; i < 256; i++) {
+                map[i] = -1;
             }
 
+            int pre = -1; // -1
+            int maxLen = 0;
+            // 滑动窗口
+            // i：滑动窗口的右边界 pre：滑动窗口的左边界
+            for (int i = 0; i < s.length(); i++) {
+                // abcad
+                // map[s.charAt(i)]:表示当前字符出现的位置
+                // 当前字符出现的位置在pre的后面，说明当前字符重复出现
+                // 将左边界移动到当前位置的下一个位置
+                pre = Math.max(map[s.charAt(i)], pre);
+                maxLen = Math.max(maxLen, i - pre);
+                map[s.charAt(i)] = i;
+            }
             return maxLen;
         }
-
     }
 
     //leetcode submit region end(Prohibit modification and deletion)
