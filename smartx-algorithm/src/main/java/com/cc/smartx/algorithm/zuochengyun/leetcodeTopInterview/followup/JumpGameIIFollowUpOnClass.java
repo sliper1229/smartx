@@ -1,6 +1,10 @@
 package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.followup;
 
-public class JumpGameIIcom.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.followupOnClass {
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class JumpGameIIFollowUpOnClass {
 
 	// start 和 end从1开始
 	public static int jump1(int N, int start, int end, int[] arr) {

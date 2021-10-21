@@ -34,6 +34,7 @@ public class Problem_0010_RegularExpressionMatching {
 			if (pi == pattern.length) {
 				return true;
 			}
+			// "" a*b*c*d*
 			if (pi + 1 < pattern.length && pattern[pi + 1] == '*') {
 				return process1(str, pattern, si, pi + 2);
 			}
