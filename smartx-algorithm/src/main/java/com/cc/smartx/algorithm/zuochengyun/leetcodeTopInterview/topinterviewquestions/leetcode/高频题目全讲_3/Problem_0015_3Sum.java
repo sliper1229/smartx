@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +34,8 @@ public class Problem_0015_3Sum {
 			} else if (nums[L] + nums[R] < target) {
 				L++;
 			} else {
+				// 注意边界条件的处理技巧
+				// 在0位置，或者跟左边的数不同
 				if (L == begin || nums[L - 1] != nums[L]) {
 					List<Integer> cur = new ArrayList<>();
 					cur.add(nums[L]);

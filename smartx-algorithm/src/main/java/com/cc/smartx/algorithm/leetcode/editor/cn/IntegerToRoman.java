@@ -78,6 +78,7 @@ public class IntegerToRoman {
     public static void main(String[] args) {
         Solution solution = new IntegerToRoman().new Solution();
         System.out.println(solution.intToRoman(3096));
+        System.out.println(3096 / 100);
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
@@ -99,11 +100,13 @@ public class IntegerToRoman {
                     {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"},
                     {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"},
                     {"", "M", "MM", "MMM"}};
+
+            // 先取整，再取余 3096
             StringBuilder roman = new StringBuilder();
-            roman.append(c[3][num / 1000 % 10]) // 3096
-                    .append(c[2][num / 100 % 10])
-                    .append(c[1][num / 10 % 10])
-                    .append(c[0][num % 10]);
+            roman.append(c[3][num / 1000 % 10]) // 3 % 10
+                    .append(c[2][num / 100 % 10]) // 30 % 10
+                    .append(c[1][num / 10 % 10]) // 309 % 10
+                    .append(c[0][num % 10]); // 3096 % 10
             return roman.toString();
         }
     }

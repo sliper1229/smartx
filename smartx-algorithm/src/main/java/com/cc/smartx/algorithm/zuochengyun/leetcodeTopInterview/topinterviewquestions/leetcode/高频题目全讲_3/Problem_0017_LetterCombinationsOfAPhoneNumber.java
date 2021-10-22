@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +30,15 @@ public class Problem_0017_LetterCombinationsOfAPhoneNumber {
 
 	// str = ['2','3']  3   3
 	// str[....index-1]，按出的结果是什么都在path里
-	// str[index...]  按完之后，有哪些组合，放入到ans里
+	// str[index...]  当前按完index位置之后，有哪些组合，放入到ans里
 	public static void process(char[] str, int index, char[] path, List<String> ans) {
 		if (index == str.length) {
 			ans.add(String.valueOf(path));
 		} else {
 			char[] cands = phone[str[index] - '2'];
 			for (char cur : cands) {
-				path[index] = cur;
+				// 深度有限表里
+				path[index] = cur; // 入递归栈
 				process(str, index + 1, path, ans);
 			}
 		}

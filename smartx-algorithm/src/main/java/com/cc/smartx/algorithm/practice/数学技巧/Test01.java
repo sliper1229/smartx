@@ -1,5 +1,12 @@
 package com.cc.smartx.algorithm.practice.数学技巧;
 
+/**
+ * 1、反转整型数字
+ * 2、字符串转整型
+ * 3、获取某一位的数字 先取整，再取余、
+ * 4、回文数字 / 数字反转
+ * 5、获取一个数字的位数
+ */
 public class Test01 {
 
     /**
@@ -11,13 +18,15 @@ public class Test01 {
      * @return
      */
     public static int reverse(int x) {
-        // 记录正负号
+        // 1、记录正负号
         boolean neg = ((x >>> 31) & 1) == 1;
-        // 转化成负数
+        // 2、转化成负数
         x = neg ? x : -x;
+        // 3、
         int m = Integer.MIN_VALUE / 10;
         int o = Integer.MIN_VALUE % 10;
         int res = 0;
+        // 4、进去while循环
         while (x != 0) {
             // 判断溢出
             if (res < m || (res == m && x % 10 < o)) {
@@ -66,4 +75,38 @@ public class Test01 {
         // 根据正负号返回转换结果
         return posi ? -res : res;
     }
+
+    // 获取某一位的数字 先取整，再取余
+    public static int getDigit(int x, int d) {
+        return (x / ((int) Math.pow(10, d - 1))) % 10;
+    }
+
+    // 回文数字 / 数字反转
+    public boolean isPalindrome(int x) {
+        if (x < 0) {
+            return false;
+        }
+
+        int temp = x;
+        // 反转后的结果
+        long y = 0;
+        while (temp != 0) {
+            int num = temp % 10; // 取第一位
+            y = y * 10 + num;
+            temp = temp / 10; //
+        }
+
+        return y == x;
+    }
+
+    // 获取一个数字的位数
+    public static int maxbits(int num) {
+        int res = 0;
+        while (num != 0) {
+            res++;
+            num /= 10;
+        }
+        return res;
+    }
+
 }

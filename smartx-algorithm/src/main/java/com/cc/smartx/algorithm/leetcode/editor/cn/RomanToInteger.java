@@ -81,7 +81,8 @@ package com.cc.smartx.algorithm.leetcode.editor.cn;
 public class RomanToInteger {
     public static void main(String[] args) {
         Solution solution = new RomanToInteger().new Solution();
-        // TO TEST
+        System.out.println(solution.romanToInt("VIII"));
+        System.out.println(solution.romanToInt("IV"));
     }
     
     //leetcode submit region begin(Prohibit modification and deletion)
@@ -122,12 +123,11 @@ class Solution {
             }
         }
 
-        // MCMXCIV 1994
         int sum = 0;
         for (int i = 0; i < s.length() - 1; i++) {
             if (nums[i] < nums[i + 1]) {
                 sum -= nums[i];
-            } else {
+            } else { // 当前位置和后面相同，加上当前的值
                 sum += nums[i];
             }
         }
