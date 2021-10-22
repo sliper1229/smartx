@@ -50,8 +50,8 @@ package com.cc.smartx.algorithm.leetcode.editor.cn;
 public class LongestPalindromicSubstring {
     public static void main(String[] args) {
         Solution solution = new LongestPalindromicSubstring().new Solution();
-        String s = "abcba11";
-        String palindrome = solution.longestPalindrome(s);
+        String s = "babad";
+        String palindrome = solution.longestPalindrome2(s);
         System.out.println(palindrome);
     }
 
@@ -82,6 +82,34 @@ public class LongestPalindromicSubstring {
             }
             return r - l + 1;
         }
+
+        public String longestPalindrome2(String s) {
+            if (s == null || s.length() == 0) return null;
+            int start =0, end = 0;
+            for (int i = 0; i < s.length(); i++) {
+                int len1 = expendAroundCenter2(s, i, i);
+                int len2 = expendAroundCenter2(s, i, i + 1);
+                int len = Math.max(len1, len2);
+                // babad
+                if (len > end - start + 1) {
+                    start = i - (len - 1) / 2;
+                    end = i + len / 2;
+                }
+            }
+            // 左闭右开
+            return s.substring(start, end + 1);
+        }
+
+        // 从l和r开始向两次扩展的最大长度
+        public int expendAroundCenter2(String s, int l, int r) {
+            while (l > 0 && r < s.length()
+                    && s.charAt(l) == s.charAt(r)) {
+                l--;
+                r++;
+            }
+            return r - l - 1;
+        }
+
     }
 //leetcode submit region end(Prohibit modification and deletion)
 
