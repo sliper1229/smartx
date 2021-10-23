@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,8 @@ public class Problem_0022_GenerateParentheses {
 	// 0 1 2 3 4 5
 	// path[0...index-1]决定已经做完了
 	// index位置上，( )
+	// leftMinusRight 左减右
+	// leftRest 剩余的左括号数量
 	public static void process(char[] path, int index, int leftMinusRight, int leftRest, List<String> ans) {
 		if (index == path.length) {
 			ans.add(String.valueOf(path));

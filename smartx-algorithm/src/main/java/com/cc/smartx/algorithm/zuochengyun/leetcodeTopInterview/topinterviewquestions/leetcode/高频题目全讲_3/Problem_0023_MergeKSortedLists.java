@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_3;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;

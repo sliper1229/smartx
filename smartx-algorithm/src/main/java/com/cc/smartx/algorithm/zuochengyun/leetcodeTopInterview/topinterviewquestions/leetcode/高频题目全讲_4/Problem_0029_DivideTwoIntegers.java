@@ -1,7 +1,10 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_4;
 
 public class Problem_0029_DivideTwoIntegers {
 
+	// 两数相加 = 无进位相加信息 + 进位信息，直到进位信息为0
+	// 无进位相加信息 = a和b异或，a ^ b
+	// 进位信息 = a与上b左移一位，(a & b) << 1
 	public static int add(int a, int b) {
 		int sum = a;
 		while (b != 0) {
@@ -12,6 +15,7 @@ public class Problem_0029_DivideTwoIntegers {
 		return sum;
 	}
 
+	// 取相反数
 	public static int negNum(int n) {
 		return add(~n, 1);
 	}
