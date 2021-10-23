@@ -114,6 +114,7 @@ public class MedianOfTwoSortedArrays {
                 // 终止条件，如果取的元素和刚好等于k，且正好相等，直接返回其中一个
                 if (i + j == k && a == b) return a;
 
+                // 谁小移动谁
                 if (a <= b) {
                     base1 += i;
                     len1 -= i;
@@ -127,40 +128,6 @@ public class MedianOfTwoSortedArrays {
             }
         }
     }
-
-    public double findKthSmallestInSortedArrays2(int[] nums1, int[] nums2, int k) {
-        int len1 = nums1.length, len2 = nums2.length;
-        // 标记当前从什么位置开始取数
-        int base1 = 0, base2 = 0;
-        while (true) {
-            // 终止条件
-            if (len1 - base1 == 0) return nums2[base2 + k - 1];
-            if (len2 - base2 == 0) return nums1[base1 + k - 1];
-            // 终止条件
-            if (k == 1) return Math.min(nums1[base1], nums2[base2]);
-
-            // 本次分别取多少个数，边界处理
-            int i = Math.max(k / 2, len1 - base1);
-            int j = Math.min(k / 2, len2 - base2);
-            int a = nums1[base1 + i], b = nums2[base2 + j];
-
-            // 终止条件
-            if (i + j == k && a == b) return a;
-
-            if (a <= b) {
-                base1 = i;
-                k -= i;
-            }
-
-            if (a >= b) {
-                base2 = j;
-                k -= j;
-            }
-
-        }
-    }
-
-
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
