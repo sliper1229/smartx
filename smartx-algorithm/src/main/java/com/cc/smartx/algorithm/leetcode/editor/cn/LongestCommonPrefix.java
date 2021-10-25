@@ -31,6 +31,7 @@
 // 👍 1822 👎 0
 
 package com.cc.smartx.algorithm.leetcode.editor.cn;
+
 /**
  * 最长公共前缀
  */
@@ -39,13 +40,25 @@ public class LongestCommonPrefix {
         Solution solution = new LongestCommonPrefix().new Solution();
         // TO TEST
     }
-    
-    //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public String longestCommonPrefix(String[] strs) {
 
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public String longestCommonPrefix(String[] strs) {
+            if (strs == null || strs.length == 0) return "";
+            if (strs.length == 1) return strs[0];
+            String first = strs[0];
+            int index = 0;
+            for (; index < first.length(); index++) {
+                for (int i = 0; i < strs.length; i++) {
+                    if (strs[i].length() <= index
+                            || strs[i].charAt(index) != first.charAt(index)) {
+                        return first.substring(0, index);
+                    }
+                }
+            }
+            return first;
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }

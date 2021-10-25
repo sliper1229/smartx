@@ -37,7 +37,7 @@ public class Problem_0017_LetterCombinationsOfAPhoneNumber {
 		} else {
 			char[] cands = phone[str[index] - '2'];
 			for (char cur : cands) {
-				// 深度有限表里
+				// 深度优先遍历
 				path[index] = cur; // 入递归栈
 				process(str, index + 1, path, ans);
 			}

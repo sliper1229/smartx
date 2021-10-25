@@ -30,6 +30,7 @@
 
 package com.cc.smartx.algorithm.leetcode.editor.cn;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,13 +41,38 @@ public class GenerateParentheses {
         Solution solution = new GenerateParentheses().new Solution();
         // TO TEST
     }
-    
+
     //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public List<String> generateParenthesis(int n) {
+    class Solution {
+        public List<String> generateParenthesis(int n) {
+            List<String> ans = new ArrayList<>();
+            char[] path = new char[n << 1];
+            process(path, 0, 0, n, ans);
+            return ans;
+        }
+
+        // path[....index - 1] 已经确定好
+        // leftMinusRight 左括号使用个数-有括号使用个数
+        // leftRest 左括号使用个数
+        public void process(char[] path, int index,
+                            int leftMinusRight, int leftRest, List<String> ans) {
+            if (index == path.length) {
+                ans.add(new String(path));
+            } else {
+                if (leftMinusRight > 0) {
+                    path[index] = ')';
+                    // 深度优先遍历, 产生多个分支
+                    process(path, index + 1, leftMinusRight - 1, leftRest, ans);
+                }
+                if (leftRest > 0) {
+                    path[index] = '(';
+                    // 深度优先遍历, 产生多个分支
+                    process(path, index + 1, leftMinusRight + 1, leftRest - 1, ans);
+                }
+            }
+        }
 
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
