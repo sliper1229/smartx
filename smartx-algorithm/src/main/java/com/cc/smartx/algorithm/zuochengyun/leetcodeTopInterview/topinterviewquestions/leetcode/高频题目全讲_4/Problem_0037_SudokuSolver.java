@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_4;
 
 public class Problem_0037_SudokuSolver {
 
@@ -24,6 +24,7 @@ public class Problem_0037_SudokuSolver {
 		}
 	}
 
+	// 尽量减枝
 	public static boolean process(char[][] board, int i, int j, boolean[][] row, boolean[][] col, boolean[][] bucket) {
 		if (i == 9) {
 			return true;
@@ -43,6 +44,7 @@ public class Problem_0037_SudokuSolver {
 					if (process(board, nexti, nextj, row, col, bucket)) {
 						return true;
 					}
+					// 深度优先遍历，恢复现场一定要做好
 					row[i][num] = false;
 					col[j][num] = false;
 					bucket[bid][num] = false;

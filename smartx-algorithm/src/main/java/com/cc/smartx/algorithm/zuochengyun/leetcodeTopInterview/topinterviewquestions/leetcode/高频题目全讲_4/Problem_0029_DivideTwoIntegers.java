@@ -40,6 +40,7 @@ public class Problem_0029_DivideTwoIntegers {
 		return n < 0;
 	}
 
+	// 除数左移至最接近被除数，又不超过被除数
 	public static int div(int a, int b) {
 		int x = isNeg(a) ? negNum(a) : a;
 		int y = isNeg(b) ? negNum(b) : b;
@@ -54,15 +55,19 @@ public class Problem_0029_DivideTwoIntegers {
 	}
 
 	public static int divide(int dividend, int divisor) {
+		// 除数是系统最小
 		if (divisor == Integer.MIN_VALUE) {
 			return dividend == Integer.MIN_VALUE ? 1 : 0;
 		}
-		// 除数不是系统最小
+		// 除数不是系统最小，被除数是系统最小
 		if (dividend == Integer.MIN_VALUE) {
+			// 溢出
 			if (divisor == negNum(1)) {
 				return Integer.MAX_VALUE;
 			}
+			// 最小加1相除
 			int res = div(add(dividend, 1), divisor);
+			// 补偿 最小加1 / 除数 + (被除数 - 最小加1相除) / 除数
 			return add(res, div(minus(dividend, multi(res, divisor)), divisor));
 		}
 		// dividend不是系统最小，divisor也不是系统最小

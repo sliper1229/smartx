@@ -1,5 +1,6 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_5;
 
+// 接雨水
 public class Problem_0042_TrappingRainWater {
 
 	public static int trap(int[] arr) {
