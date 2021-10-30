@@ -34,7 +34,7 @@ public class SearchRotateArrayLcci {
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int search(int[] arr, int target) {
-
+        return 0;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

@@ -69,7 +69,32 @@ public class RemoveNthNodeFromEndOfList {
     }
 
     class Solution {
+
+        // 1 -> 2 -> 3 -> 4 -> 5    n = 5
         public ListNode removeNthFromEnd(ListNode head, int n) {
+            ListNode pre = null;
+            ListNode cur = head;
+            while (cur != null) {
+                n--;
+                if (n == -1) {
+                    pre = head;
+                }
+                if (n < -1) {
+                    pre = pre.next;
+                }
+                cur = cur.next;
+            }
+
+            // 不够删
+            if (n > 0) {
+                return head;
+            }
+            // 删除的是头
+            if (pre == null) {
+                pre = head.next;
+            }
+            // 删除的不是头节点
+            pre.next = pre.next.next;
             return null;
         }
     }
