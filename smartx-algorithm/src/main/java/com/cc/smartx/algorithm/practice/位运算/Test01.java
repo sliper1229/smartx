@@ -46,54 +46,49 @@ public class Test01 {
 
     /**
      * https://www.cnblogs.com/tianzhenaichirou/p/14612982.html
+     *
      * @param args
      */
     public static void main(String[] args) {
+        // Integer.toBinaryString()返回的是补码，正数高位的0默认不打印，负数打印符号位1
+        // 左移（<<）
+        // 右移（>>） 无符号右移（>>>）
+        // 位移运算，都是基于补码来做错的，位移完成，转换成原码
+        // 补码 - 1，取反 ===>>> 原码
 
-        // Integer.toBinaryString()显示时，正数高位的0默认不打印，负数则会打印出符号位1
-        // 右移(>>)
-        // 无符号右移(>>>)
+        // 10000000 00000000 00000000 00111100 [-60原码] [真实数字]
+        // 11111111 11111111 11111111 11000011 [-60反码]
+        // 11111111 11111111 11111111 11000100 [-60补码] [计算机存储]
+        int i = -60;
+        System.out.println("-60：" + Integer.toBinaryString(i));
 
-        int i = 6;
-        //6的二进制是110
-        System.out.println("i：" + Integer.toBinaryString(i));
-        //6向左移1位后，变成1100，对应的10进制是12
-        System.out.println("无符号左移：" + Integer.toBinaryString(i << 1));
-        System.out.println("无符号左移：" + (i << 1));
+        // 1 1111111 11111111 11111111 11000100 [-60补码]
+        // 1 1111111 11111111 11111111 11111100 [-60补码 -> 右移4位, 高位补1]
+        // 1 1111111 11111111 11111111 11111011 [-60补码 -> 右移4位, 高位补1 -> -1]
+        // 1 0000000 00000000 00000000 00000100 [-60补码 -> 右移4位, 高位补1 -> -1 -> 取反]
+        System.out.println("-60 >> 4：" + (i >> 4));
+        System.out.println("-60 >> 4：" + Integer.toBinaryString(i >> 4));
 
-        int j = -2147483648;
-        //-2147483648的二进制是10000000000000000000000000000000
-        System.out.println("j：" + Integer.toBinaryString(j));
-        System.out.println("无符号左移：" + Integer.toBinaryString(j << 1));
-        System.out.println("无符号左移：" + (j << 1));
+        // 1 1111111 11111111 11111111 11000100 [-60补码]
+        // 0 0001111 11111111 11111111 11111100 [-60补码 -> 右移4位, 高位补0]
+        // 0 0001111 11111111 11111111 11111100 [补码 = 原码 = 反码]
+        // 0 0001111 11111111 11111111 11111100 [补码 = 原码 = 反码]
+        System.out.println("-60 >>> 4：" + (i >>> 4));
+        System.out.println("-60 >>> 4：" + Integer.toBinaryString(i >>> 4));
 
-        System.out.println("========================");
+        // 0 1111111 11111111 11111111 11111111 [补码]
+        // 0 1111111 11111111 11111111 11111111 [补码 = 原码 = 反码]
+        // 0 1111111 11111111 11111111 11111111 [补码 = 原码 = 反码]
+        System.out.println("Integer.MAX_VALUE：" + Integer.MAX_VALUE);
+        System.out.println("Integer.MAX_VALUE：" + Integer.toBinaryString(Integer.MAX_VALUE));
 
-        //6的二进制是110
-        System.out.println(Integer.toBinaryString(i));
-        System.out.println(Integer.toBinaryString(i >> 1));
-        //6向右移1位后，变成11，对应的10进制是3
-        System.out.println(i >> 1);
+        // 1 0000000 00000000 00000000 00000000 [补码]
+        // 1 1111111 11111111 11111111 11111111 [补码 -> 补码-1] ?
+        System.out.println("Integer.MIN_VALUE：" + Integer.MIN_VALUE);
+        System.out.println("Integer.MIN_VALUE：" + Integer.toBinaryString(Integer.MIN_VALUE));
+        System.out.println("Math.abs(Integer.MIN_VALUE)：" + Math.abs(Integer.MIN_VALUE));
 
-        j = -2147483648;
-        //-2147483648的二进制是
-        //10000000000000000000000000000000
-        System.out.println(Integer.toBinaryString(j));
-        System.out.println(Integer.toBinaryString((j >> 1) >> 1));//右移两位还是负数
-        //11100000000000000000000000000000
-        System.out.println((j >> 1) >> 1);
-        //-536870912
-
-        System.out.println("=====================");
-
-        j = -2147483648;
-        //-2147483648的二进制是
-        //10000000000000000000000000000000
-        System.out.println(Integer.toBinaryString(j));
-        System.out.println(Integer.toBinaryString((j >>> 1) >>> 1));//负数变为正数
-        //100000000000000000000000000000    此时首位的两个0省略不显示
-        System.out.println((j >>> 1) >>> 1);
-        //536870912
+        System.out.println(~i + 1);
 
     }
 

@@ -63,6 +63,9 @@
 // 👍 672 👎 0
 
 package com.cc.smartx.algorithm.leetcode.editor.cn;
+
+import com.sun.org.apache.xpath.internal.objects.XBoolean;
+
 /**
  * 有效的数独
  */
@@ -71,13 +74,34 @@ public class ValidSudoku {
         Solution solution = new ValidSudoku().new Solution();
         // TO TEST
     }
-    
+
     //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public boolean isValidSudoku(char[][] board) {
-        return false;
+    class Solution {
+        public boolean isValidSudoku(char[][] board) {
+            // 注意点1 0 ~ 9 ： 10个数
+            boolean[][] row = new boolean[9][10];
+            boolean[][] col = new boolean[9][10];
+            boolean[][] grid = new boolean[9][10];
+
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    // 注意点2
+                    if (board[i][j] != '.') {
+                        int num = board[i][j] - '0';
+                        // 注意点3
+                        int index = 3 * (i / 3) + (j / 3);
+                        if (row[i][num] || col[j][num]|| grid[index][num]) {
+                            return false;
+                        }
+                        row[i][num] = true;
+                        col[j][num] = true;
+                        grid[index][num] = true;
+                    }
+                }
+            }
+            return true;
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }

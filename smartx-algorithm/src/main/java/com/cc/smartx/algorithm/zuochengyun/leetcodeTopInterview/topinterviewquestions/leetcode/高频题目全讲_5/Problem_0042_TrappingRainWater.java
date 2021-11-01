@@ -13,6 +13,9 @@ public class Problem_0042_TrappingRainWater {
 		int R = N - 2;
 		int rightMax = arr[N - 1];
 		int water = 0;
+		// 比较左右两边的当前最大
+		// 左边小结算左边位置，L++
+		// 右边小结算右边，R--
 		while (L <= R) {
 			if (leftMax <= rightMax) {
 				water += Math.max(0, leftMax - arr[L]);

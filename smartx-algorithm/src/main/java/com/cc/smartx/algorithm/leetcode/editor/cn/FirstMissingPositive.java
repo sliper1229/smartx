@@ -48,6 +48,9 @@ public class FirstMissingPositive {
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int firstMissingPositive(int[] nums) {
+        int l = 0;
+        int r = nums.length;
+
         return 0;
     }
 }

@@ -5,8 +5,8 @@ public class Problem_0041_FirstMissingPositive {
 
 	// 荷兰过期问题
     public static int firstMissingPositive(int[] arr) {
-		// [0...l-1]：[i] = i+1
-		// [1...r]：最好的结果是r
+		// l的含义：[0...l-1] 上 [i] = i+1
+		// [1...r]：返回的最好的结果是r
 		int l = 0;
 		int r = arr.length;
 

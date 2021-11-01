@@ -32,6 +32,7 @@
 // 👍 2786 👎 0
 
 package com.cc.smartx.algorithm.leetcode.editor.cn;
+
 /**
  * 接雨水
  */
@@ -40,13 +41,30 @@ public class TrappingRainWater {
         Solution solution = new TrappingRainWater().new Solution();
         // TO TEST
     }
-    
+
     //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int trap(int[] height) {
-        return 0;
+    class Solution {
+        public int trap(int[] height) {
+            int N = height.length;
+            int leftMax = height[0];
+            int L = 1;
+            int rightMax = height[N - 1];
+            int R = N - 2;
+            int water = 0;
+            while (L <= R) {
+                if (leftMax < rightMax) {
+                    water += Math.max(0, leftMax - height[L]);
+                    leftMax = Math.max(height[L++], leftMax);
+                } else {
+                    water += Math.max(0, rightMax - height[R]);
+                    rightMax = Math.max(height[R--], rightMax);
+                }
+
+
+            }
+            return water;
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
