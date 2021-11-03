@@ -27,50 +27,46 @@ import java.util.List;
 public class Permutations {
     public static void main(String[] args) {
         Solution solution = new Permutations().new Solution();
-        int[] nums = {1,2,3};
+        int[] nums = {1, 2, 3};
         List<List<Integer>> permute = solution.permute(nums);
-        for (List<Integer> list : permute) {
-            for (Integer integer : list) {
-                System.out.print(integer + " ");
-            }
-            System.out.println();
-        }
+        System.out.println(permute);
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public List<List<Integer>> permute(int[] nums) {
             List<Integer> list = new ArrayList<>();
-            for (int num: nums) {
+            for (int num : nums) {
                 list.add(num);
             }
-
-            List<List<Integer>> result = new ArrayList<>();
-            permuteRec(list, 0, result);
-
-            return result;
+            List<List<Integer>> ans = new ArrayList<>();
+            process(list, 0, ans);
+            return ans;
         }
 
-        /**
-         *
-         * @param nums
-         * @param start 需要做全排列子数组的开始下标
-         * @param result
-         */
-        private void permuteRec(List<Integer> nums, int start, List<List<Integer>> result) {
-            if (start == nums.size()) {
-//                result.add(new ArrayList<>(nums));
-                result.add(nums);
+        // xx 在[index.....]需要做决定
+        // xx在index位置做好决定
+        // xx 在[index+1.....]需要做决定
+        // 回复index位置的现场
+
+        // nums在[index.....]需要做决定, 最终做好决定的结果放在ans里
+        private void process(List<Integer> nums, int index, List<List<Integer>> ans) {
+            // base case : 越界
+            if (index == nums.size()) {
+                // 注意点：这里必须新建一个List
+                List<Integer> cur = new ArrayList<>(nums);
+                ans.add(cur);
             } else {
-                for (int i = start; i < nums.size(); i++) {
-                    Collections.swap(nums, start, i);
-                    permuteRec(nums, start +1, result);
-                    Collections.swap(nums, start, i);
+                for (int i = index; i < nums.size(); i++) {
+                    // 在index位置做好决定
+                    Collections.swap(nums, index, i);
+                    // 在[index+1.....]需要做决定
+                    process(nums, index + 1, ans);
+                    // 恢复现场
+                    Collections.swap(nums, index, i);
                 }
             }
         }
-
-
     }
 //leetcode submit region end(Prohibit modification and deletion)
 

@@ -36,6 +36,7 @@
 // 👍 1255 👎 0
 
 package com.cc.smartx.algorithm.leetcode.editor.cn;
+
 /**
  * 跳跃游戏 II
  */
@@ -44,13 +45,23 @@ public class JumpGameIi {
         Solution solution = new JumpGameIi().new Solution();
         // TO TEST
     }
-    
-    //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int jump(int[] nums) {
 
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public int jump(int[] nums) {
+            int step = 0;
+            int cur = 0;
+            int next = nums[0];
+            for (int i = 1; i < nums.length; i++) {
+                if (cur < i) {
+                    step++;
+                    cur = next;
+                }
+                next = Math.max(next, nums[i] + i);
+            }
+            return step;
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }

@@ -8,9 +8,7 @@ public class Problem_0055_JumpGame {
 		}
 		int max = nums[0];
 		for (int i = 1; i < nums.length; i++) {
-//			if (max >= nums.length - 1) {
-//				return true;
-//			}
+			// 主要当前位置大于max，返回false
 			if (i > max) {
 				return false;
 			}

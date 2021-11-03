@@ -3,7 +3,7 @@ package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewque
 // 缺失的第一个正数
 public class Problem_0041_FirstMissingPositive {
 
-	// 荷兰过期问题
+	// 荷兰国旗问题
     public static int firstMissingPositive(int[] arr) {
 		// l的含义：[0...l-1] 上 [i] = i+1
 		// [1...r]：返回的最好的结果是r

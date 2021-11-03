@@ -30,10 +30,12 @@ public class JumpGameIIFollowUpOnClass {
 			return 0;
 		}
 		walk[i - 1] = true;
+
 		// 左边能到哪
 		int left = i - arr[i - 1];
 		// 右边能到哪
 		int right = i + arr[i - 1];
+
 		int next = -1;
 		int ans1 = f(arr, N, end, left, walk);
 		int ans2 = f(arr, N, end, right, walk);
@@ -44,8 +46,10 @@ public class JumpGameIIFollowUpOnClass {
 		} else if (ans2 != -1) {
 			next = ans2;
 		}
+
 		// 深度优先遍历，清除现场
 		walk[i - 1] = false;
+
 		// 上面都没中
 		if (next == -1) {
 			return -1;

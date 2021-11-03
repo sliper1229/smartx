@@ -43,7 +43,7 @@ public class Problem_0046_Permutations {
 		return ans;
 	}
 
-	// 当前在index为止做决定
+	// 在[index.....]做好决定, 结果放在ans里
 	public static void process(int[] nums, int index, List<List<Integer>> ans) {
 		if (index == nums.length) {
 			ArrayList<Integer> cur = new ArrayList<>();
@@ -52,16 +52,18 @@ public class Problem_0046_Permutations {
 			}
 			ans.add(cur);
 		} else {
+			// index位置一次跟index及后面的位置进行交换
 			for (int j = index; j < nums.length; j++) {
 				HashSet<Integer> set = new HashSet();
-//				if (set.contains(nums[j])) {
-					// index位置做做决定：index位置跟index及后面的位置进行交换
+				if (!set.contains(nums[j])) {
+					set.add(nums[j]);
+					// index位置做决定：index位置跟index及后面的位置进行交换
 					swap(nums, index, j);
 					// index+1位置做决定
 					process(nums, index + 1, ans);
 					// 恢复现场
 					swap(nums, index, j);
-//				}
+				}
 			}
 		}
 	}

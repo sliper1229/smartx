@@ -31,6 +31,9 @@
 // 👍 855 👎 0
 
 package com.cc.smartx.algorithm.leetcode.editor.cn;
+
+import java.util.List;
+
 /**
  * 全排列 II
  */
@@ -43,7 +46,7 @@ public class PermutationsIi {
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
-
+        return null;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
