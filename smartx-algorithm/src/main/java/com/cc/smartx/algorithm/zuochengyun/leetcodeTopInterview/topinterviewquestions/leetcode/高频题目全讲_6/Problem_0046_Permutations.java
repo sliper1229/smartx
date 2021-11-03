@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_6;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,6 +43,7 @@ public class Problem_0046_Permutations {
 		return ans;
 	}
 
+	// 当前在index为止做决定
 	public static void process(int[] nums, int index, List<List<Integer>> ans) {
 		if (index == nums.length) {
 			ArrayList<Integer> cur = new ArrayList<>();
@@ -52,9 +53,15 @@ public class Problem_0046_Permutations {
 			ans.add(cur);
 		} else {
 			for (int j = index; j < nums.length; j++) {
-				swap(nums, index, j);
-				process(nums, index + 1, ans);
-				swap(nums, index, j);
+				HashSet<Integer> set = new HashSet();
+//				if (set.contains(nums[j])) {
+					// index位置做做决定：index位置跟index及后面的位置进行交换
+					swap(nums, index, j);
+					// index+1位置做决定
+					process(nums, index + 1, ans);
+					// 恢复现场
+					swap(nums, index, j);
+//				}
 			}
 		}
 	}
