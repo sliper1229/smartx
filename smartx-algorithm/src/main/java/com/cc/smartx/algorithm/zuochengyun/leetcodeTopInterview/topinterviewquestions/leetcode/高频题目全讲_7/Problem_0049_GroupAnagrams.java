@@ -1,10 +1,11 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_7;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+// 同形词 字母异位词分组
 public class Problem_0049_GroupAnagrams {
 
 	public static List<List<String>> groupAnagrams1(String[] strs) {

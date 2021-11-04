@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_7;
 
 public class Problem_0687_LongestUnivaluePath {
 
@@ -46,7 +46,9 @@ public class Problem_0687_LongestUnivaluePath {
 		if (r != null && r.val == x.val) {
 			len = Math.max(len, rinfo.len + 1);
 		}
+
 		int max = Math.max(Math.max(linfo.max, rinfo.max), len);
+
 		if (l != null && r != null && l.val == x.val && r.val == x.val) {
 			max = Math.max(max, linfo.len + rinfo.len + 1);
 		}

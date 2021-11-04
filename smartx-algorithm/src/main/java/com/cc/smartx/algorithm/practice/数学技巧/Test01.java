@@ -109,4 +109,14 @@ public class Test01 {
         return res;
     }
 
+    // 876543210
+    // 123456789 L == 8 R == 2
+    // 723456189
+    public final static int[] arr = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000};
+    public static int swapInteger(int num, int L, int R) {
+        int bitL = (num / arr[L]) % 10;
+        int bitR = (num / arr[R]) % 10;
+        return num - (bitL - bitR) * arr[L] + (bitL - bitR) * arr[R];
+    }
+
 }

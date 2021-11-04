@@ -1,13 +1,15 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_7;
 
 public class Problem_0048_RotateImage {
 
 	public static void rotate(int[][] matrix) {
-		// matrix.len == matrix[0].len
+		// 左上角
 		int tR = 0;
 		int tC = 0;
+		// 右上角
 		int dR = matrix.length - 1;
 		int dC = matrix[0].length - 1;
+		// 从外圈转到内圈
 		while (tR < dR) {
 			rotateEdge(matrix, tR++, tC++, dR--, dC--);
 		}
