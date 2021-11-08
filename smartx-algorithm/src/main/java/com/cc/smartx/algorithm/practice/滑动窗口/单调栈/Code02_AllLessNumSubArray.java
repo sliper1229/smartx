@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.zuochengyun.算法和数据结构体系学习班.class24;
+package com.cc.smartx.algorithm.practice.滑动窗口.单调栈;
 
 import java.util.LinkedList;
 
@@ -36,37 +36,22 @@ public class Code02_AllLessNumSubArray {
 		LinkedList<Integer> maxWindow = new LinkedList<>();
 		LinkedList<Integer> minWindow = new LinkedList<>();
 		int R = 0;
-
-		// 两个重要的结论:
-		// 1. [L......R]上满足，那么在[L......R]内部的[L'......R']都满足
-		// [L......R]达标，内部必达标，怎么缩都达标
-		// 2. [L......R]上不满足，那么在[L......R]不管往右扩，都时不达标的
-		// [L......R]不达标，怎么扩都不达标
-
-		// 从每一个位置作为开头，求个数
 		for (int L = 0; L < N; L++) {
-
 			while (R < N) {
-				// 最大窗口 滑动窗口不为空，并且尾部小于当前值，尾部弹出
 				while (!maxWindow.isEmpty() && arr[maxWindow.peekLast()] <= arr[R]) {
 					maxWindow.pollLast();
 				}
 				maxWindow.addLast(R);
-
-				//最小窗口
 				while (!minWindow.isEmpty() && arr[minWindow.peekLast()] >= arr[R]) {
 					minWindow.pollLast();
 				}
 				minWindow.addLast(R);
-
-				//满足条件，一直往右扩，当不满足条件时，直接退出循环
 				if (arr[maxWindow.peekFirst()] - arr[minWindow.peekFirst()] > sum) {
 					break;
 				} else {
 					R++;
 				}
 			}
-
 			count += R - L;
 			if (maxWindow.peekFirst() == L) {
 				maxWindow.pollFirst();

@@ -1,5 +1,6 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_9;
 
+// 荷兰国旗问题
 public class Problem_0075_SortColors {
 	public static void sortColors(int[] nums) {
 		int less = -1;

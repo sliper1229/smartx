@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_10;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -20,9 +20,13 @@ public class Problem_0078_Subsets {
 		if (index == nums.length) {
 			ans.add(copy(path));
 		} else {
+			// 不要当前
 			process(nums, index + 1, path, ans);
+
+			// 要当前
 			path.addLast(nums[index]);
 			process(nums, index + 1, path, ans);
+			// 深度有限遍历，恢复现场
 			path.removeLast();
 		}
 	}

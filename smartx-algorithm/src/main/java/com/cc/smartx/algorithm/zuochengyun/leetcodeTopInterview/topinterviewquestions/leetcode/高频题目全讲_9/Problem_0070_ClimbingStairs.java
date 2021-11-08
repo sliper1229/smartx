@@ -1,7 +1,8 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_9;
 
 public class Problem_0070_ClimbingStairs {
 
+	// 所有类似斐波那契数列的题，都是O(lgN)的解
     public static int climbStairs(int n) {
 		if (n < 1) {
 			return 0;

@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions;
+package com.cc.smartx.algorithm.zuochengyun.leetcodeTopInterview.topinterviewquestions.leetcode.高频题目全讲_9;
 
 public class Problem_0069_SqrtX {
 
@@ -10,6 +10,7 @@ public class Problem_0069_SqrtX {
 		if (x < 3) {
 			return 1;
 		}
+		// long类型，防止溢出
 		long ans = 1;
 		long L = 1;
 		long R = x;
@@ -17,12 +18,14 @@ public class Problem_0069_SqrtX {
 		while (L <= R) {
 			M = (L + R) / 2;
 			if (M * M <= x) {
+				// 记下来
 				ans = M;
 				L = M + 1;
 			} else {
 				R = M - 1;
 			}
 		}
+		// 将long转成int
 		return (int) ans;
 	}
 

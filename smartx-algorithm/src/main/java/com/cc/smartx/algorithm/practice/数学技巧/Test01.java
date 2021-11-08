@@ -6,6 +6,7 @@ package com.cc.smartx.algorithm.practice.数学技巧;
  * 3、获取某一位的数字 先取整，再取余、
  * 4、回文数字 / 数字反转
  * 5、获取一个数字的位数
+ * 6. 求10的75次方：二分 TODO
  */
 public class Test01 {
 
