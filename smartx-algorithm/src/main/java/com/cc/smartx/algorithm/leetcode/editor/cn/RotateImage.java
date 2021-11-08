@@ -46,6 +46,7 @@
 // 👍 1043 👎 0
 
 package com.cc.smartx.algorithm.leetcode.editor.cn;
+
 /**
  * 旋转图像
  */
@@ -54,13 +55,31 @@ public class RotateImage {
         Solution solution = new RotateImage().new Solution();
         // TO TEST
     }
-    
-    //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public void rotate(int[][] matrix) {
 
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public void rotate(int[][] matrix) {
+            int leftRow = 0;
+            int leftCol = 0;
+            int rightRow = matrix.length - 1;
+            int rightCol = matrix[0].length - 1;
+
+            while (leftRow < rightRow) {
+                int times = rightRow -leftRow;
+                for (int i = 0; i < times; i++) {
+                    int temp = matrix[leftRow][leftCol + i];
+                    matrix[leftRow][leftCol + i] = matrix[rightRow - i][leftCol];
+                    matrix[rightRow - i][leftCol] = matrix[rightRow][rightCol - i];
+                    matrix[rightRow][rightCol - i] = matrix[leftRow + i][rightCol];
+                    matrix[leftRow + i][rightCol] = temp;
+                }
+                leftRow++;
+                leftCol++;
+                rightRow--;
+                rightCol--;
+            }
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
