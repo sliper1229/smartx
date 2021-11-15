@@ -49,7 +49,7 @@ public class PowxN {
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public double myPow(double x, int n) {
-
+        return 0L;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

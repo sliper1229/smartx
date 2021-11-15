@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.practice.二分技巧;
+package com.cc.smartx.algorithm.practice.二分查找;
 
 public class Test01 {
 
