@@ -21,12 +21,30 @@
 经典题目：
 
     小和问题：
+    while (p1 <= M && p2 <= R) {
+        // 左右相等时，拷贝右边，不累加到结果里
+        res += arr[p1] < arr[p2] ? arr[p1] * (R - p2 + 1) : 0;
+        help[i++] = arr[p1] < arr[p2] ? arr[p1++] : arr[p2++];
+    }
+
     逆序对问题：
     while (p1 <= M && p2 <= R) {
     	// 左右相等时，拷贝右边，不累加到结果里
     	res += arr[p1] < arr[p2] ? arr[p1] * (R - p2 + 1) : 0;
     	help[i++] = arr[p1] < arr[p2] ? arr[p1++] : arr[p2++];
 	}
+
+    比右侧大两倍问题：
+    // 3 6 9 	 0 1 2
+    int rightIndex = m + 1;
+    for (int leftIndex = L; leftIndex <= m; leftIndex++) {
+        while (rightIndex <= r && arr[leftIndex] > 2 * arr[rightIndex]) {
+			rightIndex++;
+        }
+        ans += rightIndex - m - 1;
+    }
+
+    区间和的个数：
     
 
 

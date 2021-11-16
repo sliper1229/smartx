@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.practice.排序.快排;
+package com.cc.smartx.algorithm.practice.排序.归并;
 
 /**
  * 1、将原数组转化成前缀和数组
