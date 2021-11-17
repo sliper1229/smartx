@@ -35,7 +35,41 @@ public class Code01_CountOfRangeSum {
     }
 
     private static int merge(long[] sum, int l, int m, int r, int lower, int upper) {
-        return 0;
+        int ans = 0;
+        // [windowL, windowR) 左闭右开
+        int windowsL = l;
+        int windowsR = l;
+        // 1 3 6    0 2 4
+        for (int i = m + 1; i <= r; i++) {
+            long min = sum[i] - upper;
+            long max = sum[i] - lower;
+            while (windowsL <= m && sum[windowsL] < min) {
+                windowsL++;
+            }
+            while (windowsR <= m && sum[windowsL] <= max) {
+                windowsR++;
+            }
+            ans += windowsR - windowsL;
+        }
+
+        long[] help = new long[r - l + 1];
+        int i = 0;
+        int p1 = l;
+        int p2 = m + 1;
+
+        while (p1 <= m && p2 <= r) {
+            help[i++] = sum[p1] < sum[p2] ? sum[p1++] : sum[p2++];
+        }
+        while (p1 <= m) {
+            help[i++] = sum[p1++];
+        }
+        while (p2 <= r) {
+            help[i++] = sum[p2++];
+        }
+        for (int j = 0; j < help.length; j++) {
+            sum[l + j] = help[j];
+        }
+        return ans;
     }
 
 }
