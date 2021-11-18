@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.practice.滑动窗口.单调栈;
+package com.cc.smartx.algorithm.practice.滑动窗口.单调栈.done;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,56 +13,25 @@ import java.util.Stack;
  */
 public class Code02_MonotonousStack {
 
-    // 给定一个arr，i -> arr[i]
-    // 返回的结果
-    // int[][]  i*2 含义：
-    // [
-    //    [0],[1]  长度为2
-    //    [0],[1]  长度为2
-    //    [0],[1]  长度为2
-    // ]
-    // res[i][0]  i位置的数，左边离i最近，比i小的数，位置是啥
-    // res[i][1]  i位置的数，右边离i最近，比i小的数，位置是啥
     public static int[][] getNearLessNoRepeat(int[] arr) {
         int[][] res = new int[arr.length][2];
         Stack<Integer> stack = new Stack<>();
-        for (int i = 0; i < arr.length; i++) { // i -> arr[i]
-            while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
-                // 当前弹出的东西 ： popIndex  -> arr[popIndex]
-                int popIndex = stack.pop();
-                int leftLessIndex = stack.isEmpty() ? -1 : stack.peek();
-                res[popIndex][0] = leftLessIndex;
+        for (int i = 0; i < arr.length; i++) {
+            while (!stack.isEmpty() && stack.peek() > arr[i]) {
+                Integer popIndex = stack.pop();
+                res[popIndex][0] = !stack.isEmpty() ? stack.peek() : -1;
                 res[popIndex][1] = i;
             }
             stack.push(i);
         }
         while (!stack.isEmpty()) {
-            int popIndex = stack.pop();
-            int leftLessIndex = stack.isEmpty() ? -1 : stack.peek();
-            res[popIndex][0] = leftLessIndex;
+            Integer popIndex = stack.pop();
+            res[popIndex][0] = !stack.isEmpty() ? stack.peek() : -1;
             res[popIndex][1] = -1;
         }
         return res;
     }
 
-    // arr可以无重复值，也可以有重复值
-    // 返回的结果
-    // arr = {3,1,2}
-    //        0 1 2
-    //  [
-    //    [-1,1]
-    //    [-1,-1]
-    //    [1,-1]
-    //  ]
-    //
-    // int[][]  N*2 含义：
-    // [
-    //   0: [0],[1]  长度为2
-    //    [0],[1]  长度为2
-    //    [0],[1]  长度为2
-    // ]
-    // res[i][0]  i位置的数，左边离i最近，比arr[i]小的数，位置是啥
-    // res[i][1]  i位置的数，右边离i最近，比arr[i]小的数，位置是啥
     public static int[][] getNearLess(int[] arr) {
         int N = arr.length;
         int[][] res = new int[N][2];

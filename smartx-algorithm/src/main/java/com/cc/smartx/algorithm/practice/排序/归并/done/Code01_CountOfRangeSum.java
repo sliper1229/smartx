@@ -46,7 +46,7 @@ public class Code01_CountOfRangeSum {
             while (windowsL <= m && sum[windowsL] < min) {
                 windowsL++;
             }
-            while (windowsR <= m && sum[windowsL] <= max) {
+            while (windowsR <= m && sum[windowsR] <= max) {
                 windowsR++;
             }
             ans += windowsR - windowsL;

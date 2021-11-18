@@ -2,7 +2,7 @@
 主流程：
 
     定义主函数：arr[L.....R]上有序
-    =====> arr[L.....M]上有序，arr[M+1.....R]上有序，将两个有序的部分合并
+    递归过程：arr[L.....M]上有序，arr[M+1.....R]上有序，将两个有序的部分合并
 
 伪代码：
 
@@ -45,6 +45,22 @@
     }
 
     区间和的个数：
+    int ans = 0;
+    // [windowL, windowR) 左闭右开
+    int windowsL = l;
+    int windowsR = l;
+    // 1 3 6    0 2 4
+    for (int i = m + 1; i <= r; i++) {
+        long min = sum[i] - upper;
+        long max = sum[i] - lower;
+        while (windowsL <= m && sum[windowsL] < min) {
+            windowsL++;
+        }
+        while (windowsR <= m && sum[windowsR] <= max) {
+            windowsR++;
+        }
+        ans += windowsR - windowsL;
+    }
     
 
 
