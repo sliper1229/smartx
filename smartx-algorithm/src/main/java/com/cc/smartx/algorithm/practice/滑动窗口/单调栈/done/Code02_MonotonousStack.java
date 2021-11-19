@@ -4,13 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-/**
- * 两边离自己最近比自己大的信息，栈底->栈尾：从大到小
- * <p>
- * 维持单调性能
- * <p>
- * 单调栈
- */
 public class Code02_MonotonousStack {
 
     public static int[][] getNearLessNoRepeat(int[] arr) {
