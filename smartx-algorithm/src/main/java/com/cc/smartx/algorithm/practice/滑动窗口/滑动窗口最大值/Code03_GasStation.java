@@ -2,6 +2,10 @@ package com.cc.smartx.algorithm.practice.滑动窗口.滑动窗口最大值;
 
 import java.util.LinkedList;
 
+// gas [1 1 3 1]
+// cost[2 2 1 1]
+// arr[-1 -1 2 0]
+
 // 测试链接：https://leetcode.com/problems/gas-station
 public class Code03_GasStation {
 

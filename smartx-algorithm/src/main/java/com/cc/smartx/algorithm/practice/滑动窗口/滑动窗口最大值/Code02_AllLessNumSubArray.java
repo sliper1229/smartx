@@ -63,6 +63,7 @@ public class Code02_AllLessNumSubArray {
 				if (arr[maxWindow.peekFirst()] - arr[minWindow.peekFirst()] > sum) {
 					break;
 				} else {
+					// R往右扩
 					R++;
 				}
 			}
