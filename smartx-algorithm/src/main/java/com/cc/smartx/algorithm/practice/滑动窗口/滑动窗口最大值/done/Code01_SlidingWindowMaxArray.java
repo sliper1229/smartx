@@ -36,7 +36,7 @@ public class Code01_SlidingWindowMaxArray {
 		int index = 0;
 		for (int R = 0; R < arr.length; R++) {
 			// 一直弹
-			while (!qmax.isEmpty() && arr[qmax.peekLast()] <= arr[R]) {
+			while (!qmax.isEmpty() && arr[R] >= arr[qmax.peekLast()]) {
 				qmax.pollLast();
 			}
 			// 放入
