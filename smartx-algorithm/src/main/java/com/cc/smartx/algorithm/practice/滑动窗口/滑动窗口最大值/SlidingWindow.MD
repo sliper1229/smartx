@@ -8,6 +8,13 @@
 
     a b -> a (<b) (<b) (=b) b
 
+伪代码：
+
+    while (!qmax.isEmpty() && arr[R] >= arr[qmax.peekLast()]) {
+        qmax.pollLast();
+    }
+    qmax.addLast(R);
+
 经典题目：
 
 - [76]最小覆盖子串
