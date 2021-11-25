@@ -35,13 +35,12 @@ public class Code01_SlidingWindowMaxArray {
 		int[] res = new int[arr.length - w + 1];
 		int index = 0;
 		for (int R = 0; R < arr.length; R++) {
-			// 一直弹
+			// 右边添加
 			while (!qmax.isEmpty() && arr[R] >= arr[qmax.peekLast()]) {
 				qmax.pollLast();
 			}
-			// 放入
 			qmax.addLast(R);
-			//  窗口左边过期，L = R - w
+			//  左边过期
 			if (qmax.peekFirst() == R - w) {
 				qmax.pollFirst();
 			}

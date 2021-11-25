@@ -21,7 +21,7 @@ public class WindowMax {
             return;
         }
         while (!qmax.isEmpty() && arr[R] >= arr[qmax.peekLast()]) {
-            qmax.pollFirst();
+            qmax.pollLast();
         }
         qmax.addLast(R);
         R++;
