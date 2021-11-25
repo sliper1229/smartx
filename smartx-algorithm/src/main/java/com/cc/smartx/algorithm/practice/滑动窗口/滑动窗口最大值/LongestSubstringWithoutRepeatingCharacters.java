@@ -45,7 +45,7 @@
 // Related Topics 哈希表 双指针 字符串 Sliding Window 
 // 👍 5141 👎 0
 
-package com.cc.smartx.algorithm.leetcode.editor.cn;
+package com.cc.smartx.algorithm.practice.滑动窗口.滑动窗口最大值;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -107,11 +107,11 @@ public class LongestSubstringWithoutRepeatingCharacters {
         public int lengthOfLongestSubstring3(String s) {
             if (s == null || s.length() == 0) return 0;
             int right = 0;
-            //
             int left = -1;
             int[] map = new int[256];
             Arrays.fill(map, -1);
             int maxLen = 0;
+
             //输入: s = "abcabcbb"
             //输出: 3
             //解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
