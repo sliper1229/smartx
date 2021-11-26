@@ -65,10 +65,8 @@ public class MinimumSizeSubarraySum {
             //输出：2
             //解释：子数组 [4,3] 是该条件下的长度最小的子数组。
 
-            // 找以每个数结尾的
             for (; right < nums.length; right++) {
                 sum += nums[right];
-                // 长度长度最小的子序列
                 while (sum >= target) {
                     length = Math.min(right - left + 1, length);
                     sum -= nums[left];

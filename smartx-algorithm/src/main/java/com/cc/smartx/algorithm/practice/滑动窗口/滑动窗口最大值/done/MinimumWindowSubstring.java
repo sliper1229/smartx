@@ -46,7 +46,7 @@
 //进阶：你能设计一个在 o(n) 时间内解决此问题的算法吗？ Related Topics 哈希表 字符串 滑动窗口 
 // 👍 1410 👎 0
 
-package com.cc.smartx.algorithm.leetcode.editor.cn;
+package com.cc.smartx.algorithm.practice.滑动窗口.滑动窗口最大值.done;
 
 /**
  * 最小覆盖子串
@@ -82,6 +82,7 @@ public class MinimumWindowSubstring {
 
                 // 什么时候移动窗口左边界？
                 if (count == 0) {
+                    // 小于0表示多余
                     while (map[s.charAt(left)] < 0) {
                         map[s.charAt(left)]++;
                         left++;

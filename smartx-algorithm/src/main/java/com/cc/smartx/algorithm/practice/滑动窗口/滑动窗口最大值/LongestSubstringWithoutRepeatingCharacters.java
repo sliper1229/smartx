@@ -115,7 +115,6 @@ public class LongestSubstringWithoutRepeatingCharacters {
             //输入: s = "abcabcbb"
             //输出: 3
             //解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
-            // 找以每个数结尾的
             for (; right < s.length(); right++) {
                 int index = s.charAt(right);
                 left = Math.max(map[index], left);

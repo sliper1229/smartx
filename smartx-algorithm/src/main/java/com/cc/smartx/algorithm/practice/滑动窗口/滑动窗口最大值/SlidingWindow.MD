@@ -35,4 +35,8 @@
 
 - 而且一般右窗口通过for循环来实现移动，左窗口通过if或者while循环来实现
 
-https://www.jianshu.com/p/c17a7a5296f8
+    https://www.jianshu.com/p/c17a7a5296f8
+
+细节问题的探索
+- 比方说，用哪种数据结构表示窗口，如何向窗口添加新元素，如何缩小窗口，在哪里更新结果，窗口的限制条件是什么
+  https://www.jianshu.com/p/c17a7a5296f8
