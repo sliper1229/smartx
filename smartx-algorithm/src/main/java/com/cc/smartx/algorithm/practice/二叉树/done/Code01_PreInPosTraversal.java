@@ -32,10 +32,10 @@ public class Code01_PreInPosTraversal {
 
         Stack<Node> stack = new Stack<>();
         stack.push(head);
-        // 一边弹，一边放，先右后左
+        // 一边弹一边放，先右后左
         while (!stack.isEmpty()) {
             head = stack.pop();
-            System.out.println(head.value + " ");
+            System.out.print(head.value + " ");
             if (head.right != null) {
                 stack.push(head.right);
             }
@@ -43,6 +43,7 @@ public class Code01_PreInPosTraversal {
                 stack.push(head.left);
             }
         }
+        System.out.println("");
     }
 
     public static void inOrderTraversal(Node head) {
@@ -58,12 +59,11 @@ public class Code01_PreInPosTraversal {
                 head = head.left;
             } else {
                 head = stack.pop();
-                System.out.println(head.value + " ");
+                System.out.print(head.value + " ");
                 head = head.right;
             }
         }
-
-
+        System.out.println("");
     }
 
     public static void postOrderTraversal(Node head) {
@@ -85,9 +85,12 @@ public class Code01_PreInPosTraversal {
                 stack1.push(head.right);
             }
         }
+
         while (!stack2.isEmpty()) {
-            System.out.println(stack2.pop() + " ");
+            head = stack2.pop();
+            System.out.print(head.value + " ");
         }
+        System.out.println("");
     }
 
 
@@ -113,6 +116,12 @@ public class Code01_PreInPosTraversal {
     }
 
     public static void main(String[] args) {
+        /**
+         * 0 1 3 4 2 5 6
+         * 3 1 4 0 5 2 6
+         * 3 4 1 5 6 2 0
+         * 0 1 2 3 4 5 6
+         */
         Node head = new Node(0);
         head.left = new Node(1);
         head.right = new Node(2);
