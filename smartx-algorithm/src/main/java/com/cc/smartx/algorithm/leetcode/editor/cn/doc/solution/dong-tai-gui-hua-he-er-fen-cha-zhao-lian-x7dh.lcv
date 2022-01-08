@@ -1,0 +1,113 @@
+### 二分查找思路
+
+- 先说下这个解法的时间复杂度为O(nlogn)。下面举例来说明一下
+
+1. 首先，给你一排扑克牌，我们像遍历数组那样从左到右一张一张处理这些扑克牌，最终要把这些牌分成若干堆。
+   ![a0.png](https://pic.leetcode-cn.com/1633509284-WgLUDc-a0.png)
+2. 然后我们按照以下规则来处理这些扑克牌：
+   a. 只能把点数小的牌压到点数比它大的牌上；
+   b. 如果当前牌点数较大没有可以放置的堆，则新建一个堆，把这张牌放进去；
+   c. 如果当前牌有多个堆可供选择，则选择最左边的那一堆放置
+3. 以上面的扑克牌的例子来说，最终会被分成这样 5 堆（我们认为纸牌 A 的牌面是最大的，纸牌 2 的牌面是最小的）。
+   ![a1.png](https://pic.leetcode-cn.com/1633509327-ZjmZvx-a1.png)
+
+- 为什么上面规则中的第三条：如果当前牌有多个堆可供选择，则选择最左边的那一堆放置
+- 因为这样可以保证牌堆顶的牌有序
+- 比方说上面这张图，细看下，是不是按照有序的顺序排列的2, 4, 7, 8, Q
+  ![a3.png](https://pic.leetcode-cn.com/1633509352-PKDlNV-a3.png)
+
+4. 按照上述规则执行，可以算出最长递增子序列，牌的堆数就是最长递增子序列的长度
+   ![a4.png](https://pic.leetcode-cn.com/1633509360-lXekbY-a4.png)
+
+**每次处理一张扑克牌不是要找一个合适的牌堆顶来放吗，牌堆顶的牌不是有序吗，这就能用到二分查找了：用二分查找来搜索当前牌应放置的位置。**
+
+### 代码
+
+* javascript
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var lengthOfLIS = function(nums) {
+
+  // 每堆的堆顶
+  const top = [];
+  // 牌堆数初始化为0
+  let piles = 0;
+  for (let i = 0; i < nums.length; i++) {
+    // 要处理的扑克牌
+    let poker = nums[i];
+    // 左堆和最右堆进行二分搜索，因为堆顶是有序排的，最终找到该牌要插入的堆
+    let left = 0,
+      right = piles;
+    //搜索区间是左闭右开
+    while (left < right) {
+      let mid = left + ((right - left) >> 1);
+      if (top[mid] > poker) {
+        right = mid;
+      } else if (top[mid] < poker) {
+        left = mid + 1;
+      } else {
+        right = mid;
+      }
+    }
+
+    //  没找到合适的牌堆，新建一堆
+    if (left == piles) piles++;
+    // 把这张牌放到堆顶
+    top[left] = poker;
+  }
+  return piles;
+};
+```
+
+### 动态规划思路
+
+1. dp[i]含义：从0到下标为i的序列的最长子序列长度
+   ![b0.png](https://pic.leetcode-cn.com/1633509612-kkGoPT-b0.png)
+   ![b1.png](https://pic.leetcode-cn.com/1633509618-YfuOIy-b1.png)
+
+2. 根据这个定义，我们的最终结果（子序列的最大长度）应该是 dp 数组中的最大值。
+
+* javascript
+
+```javascript
+// 找出最大的子序列
+let res = 0
+for (let i = 0; i < dp.length; i++) {
+    res = Math.max(res, dp[i])
+}
+return res
+```
+
+3. 假设我们已经知道了 dp[0..4] 的所有结果，我们如何通过这些已知结果推出 dp[5] 呢？
+   ![b2.png](https://pic.leetcode-cn.com/1633509653-FSbaEE-b2.png)
+4. nums[5] = 3，既然是递增子序列，我们只要找到前面那些结尾比 3 小的子序列，然后把 3 接到最后，就可以形成一个新的递增子序列，而且这个新的子序列长度加一。
+
+- 附上我学到这两种解题思路的出处[从最长递增子序列学会如何推状态转移方程](https://mp.weixin.qq.com/s?__biz=MzAxODQxMDM0Mw==&mid=2247485269&idx=1&sn=571a6366b0b592f103971ae3e119998b&scene=21#wechat_redirect)
+
+* javascript
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var lengthOfLIS = function (nums) {
+  const dp = new Array(nums.length).fill(1);
+  for (let i = 0; i < nums.length; i++) {
+    // i与i前面的元素比较
+    for (let j = 0; j < i; j++) {
+      // 找比i小的元素，找到一个，就让当前序列的最长子序列长度加1
+      if (nums[i] > nums[j]) {
+        dp[i] = Math.max(dp[i], dp[j] + 1);
+      }
+    }
+  }
+  // 找出最大的子序列
+  return Math.max(...dp);
+};
+```
+
