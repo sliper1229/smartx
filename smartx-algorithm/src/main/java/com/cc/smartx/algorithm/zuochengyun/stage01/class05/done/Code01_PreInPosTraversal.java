@@ -47,7 +47,6 @@ public class Code01_PreInPosTraversal {
 
     }
 
-
     public static void inOrderTraversal(Node head) {
         if (head == null) {
             return;

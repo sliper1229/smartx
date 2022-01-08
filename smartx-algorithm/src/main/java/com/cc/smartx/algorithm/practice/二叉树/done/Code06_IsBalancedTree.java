@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.practice.二叉树;
+package com.cc.smartx.algorithm.practice.二叉树.done;
 
 /**
  * 平衡二叉树：任意节点，左树高度 和 右树高度 都不大于1
@@ -15,6 +15,11 @@ public class Code06_IsBalancedTree {
 		}
 	}
 
+	/**
+	 * 树型DP套路求解
+	 * @param head
+	 * @return
+	 */
 	public static boolean isBalanced(Node head) {
 		return process(head).isBalanced;
 	}

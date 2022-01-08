@@ -1,4 +1,4 @@
-package com.cc.smartx.algorithm.practice.二叉树;
+package com.cc.smartx.algorithm.practice.二叉树.done;
 
 import java.util.LinkedList;
 import java.util.Stack;
@@ -48,7 +48,7 @@ public class Code04_IsBST {
     }
 
     /**
-     * 搜索二叉树-递归-中序遍历有序
+     * 搜索二叉树-中序遍历递归形式
      *
      * @param head
      * @return
@@ -85,7 +85,7 @@ public class Code04_IsBST {
     }
 
     /**
-     * 搜索二叉树-非递归
+     * 搜索二叉树-改中序遍历非递归形式
      *
      * @param head
      * @return
@@ -106,32 +106,16 @@ public class Code04_IsBST {
                 head = head.left;
             } else {
                 head = stack.pop();
-
-                // 打印行为
-                if (head.value >= preValue) {
-                    preValue = head.value;
-                } else {
+                // 替换打印行为
+                if (head.value < preValue) {
                     return false;
                 }
-
+                preValue = head.value;
                 head = head.right;
             }
         }
 
         return true;
-    }
-
-
-    public static class ReturnData {
-        public boolean isBST;
-        public Integer max;
-        public Integer min;
-
-        public ReturnData(boolean isBST, Integer max, Integer min) {
-            this.isBST = isBST;
-            this.max = max;
-            this.min = min;
-        }
     }
 
     /**
@@ -168,5 +152,15 @@ public class Code04_IsBST {
         return new ReturnData(isBST, min, max);
     }
 
+    public static class ReturnData {
+        public boolean isBST;
+        public Integer max;
+        public Integer min;
 
+        public ReturnData(boolean isBST, Integer max, Integer min) {
+            this.isBST = isBST;
+            this.max = max;
+            this.min = min;
+        }
+    }
 }
